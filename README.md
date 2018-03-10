@@ -48,7 +48,7 @@ Puede descargar este proyecto y desplegarlo de forma local siguiendo las éstas 
 Encontrará la aplicación desplegada si en su browser se dirige a http://localhost:8080/
 
 ## Licencia
-Estándar [MIT license](https://github.com/sneiderV/restaurantsDis/blob/master/LICENSE)  
+Estándar [MIT license]  
 
 ## Autores
 * **Andrés Olivares** - [*Personal website*](https://af-olivares10.github.io/)
