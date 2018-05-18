@@ -53,7 +53,7 @@ module.exports = function(express) {
   });
     apiRouter.get("/tweets/", function(req, res) {
     //let params = {screen_name: 'nodejs'};
-    client.get('search/tweets.json?q=hypertension&result_type=popular', function(error, tweets, response) {
+    client.get('search/tweets.json?q=hypertension&result_type=popular&exclude_replies=true&exclude_retweets=true', function(error, tweets, response) {
       res.send(tweets);
       });
   });
