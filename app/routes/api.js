@@ -19,6 +19,14 @@ const UsuarioSchema  = require("../models/usuario");
 const Usuario = mongoose.model("Usuario", UsuarioSchema);
 const ReferenciaSchema  = require("../models/referencia");
 const Referencia = mongoose.model("Referencia", ReferenciaSchema);
+const Twitter = require('twitter');
+//Lo siento pero firebase hosting nos exige pagar para hacer consultas a redes externas desde el servidor, no nos quedan opciones :(
+const client = new Twitter({
+  consumer_key: 'kPEp58hnV1qdfyoMFD0rTI5yS',
+  consumer_secret: 'mviGc6NaxC7mQvg1JSuqAt2wSQD6Hn4hdqiJliwCYVPZbEXkRO',
+  access_token_key: '955810668011311104-bYdw3YNdbNuPAvU5YLDFkfJNNrQSfxd',
+  access_token_secret: 'm9Ezs0sS9PLgVcXbAKll9en6CcxHxU5GrHgYtcePRAr6j'
+});
 
 // super secret for creating tokens
 const superSecret = config.secret;
@@ -42,6 +50,12 @@ module.exports = function(express) {
     });
     return res.json({ success: true, message: "Usuario agregado" });
 
+  });
+    apiRouter.get("/tweets/", function(req, res) {
+    //let params = {screen_name: 'nodejs'};
+    client.get('search/tweets.json?q=hypertension&result_type=popular', function(error, tweets, response) {
+      res.send(tweets);
+      });
   });
   apiRouter.post("/usuarios",function (req, res){
     var elementos = req.body;
