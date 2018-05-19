@@ -19,6 +19,8 @@ const UsuarioSchema  = require("../models/usuario");
 const Usuario = mongoose.model("Usuario", UsuarioSchema);
 const ReferenciaSchema  = require("../models/referencia");
 const Referencia = mongoose.model("Referencia", ReferenciaSchema);
+const HbCommentSchema  = require("../models/hbComment");
+const HbComment = mongoose.model("HbComment", HbCommentSchema);
 const Twitter = require('twitter');
 //Lo siento pero firebase hosting nos exige pagar para hacer consultas a redes externas desde el servidor, no nos quedan opciones :(
 const client = new Twitter({
@@ -42,21 +44,41 @@ module.exports = function(express) {
       if (err) {
         // duplicate entry
         if (err.code == 11000)
-        return res.json({ success: false, message: 'Ya existe un usuario con ese login. '});
+          return res.json({ success: false, message: 'Ya existe un usuario con ese login. '});
         else
-        return res.send(err);
+          return res.send(err);
       }
 
     });
     return res.json({ success: true, message: "Usuario agregado" });
 
   });
-    apiRouter.get("/tweets/", function(req, res) {
-    //let params = {screen_name: 'nodejs'};
+  apiRouter.get("/tweets/", function(req, res) {
+    //let params = {screen_name: 'nodejs'};//AIzaSyBSk-jZ5aZCV4-yTkJ4AUYPPFlx5SU3_fk
     client.get('search/tweets.json?q=hypertension&result_type=popular&exclude_replies=true&exclude_retweets=true', function(error, tweets, response) {
       res.send(tweets);
-      });
+    });
   });
+  apiRouter.get("/hbComments/", function(req, res) {
+    //let params = {screen_name: 'nodejs'};
+    HbComment.find(function(err, bancos) {
+      if (err) return res.send(err);
+      res.json(bancos);
+    })
+  });
+  apiRouter.post("/hbComment/", function(req, res) {
+    var hbComment = new HbComment();
+    hbComment.user = req.body.user;
+    hbComment.comment =  req.body.comment;
+    hbComment.image= req.body.image;
+    hbComment.save(function(err) {
+      if (err) {
+        return res.send(err);
+      }
+    });
+  };
+  res.json({ success: true, message: "Comment added!" });
+});
   apiRouter.post("/usuarios",function (req, res){
     var elementos = req.body;
     elementos.forEach(function(element){
@@ -151,7 +173,7 @@ module.exports = function(express) {
         }
       }
       else
-      return res.send(err);
+        return res.send(err);
 
     })
   });
