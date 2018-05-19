@@ -76,7 +76,7 @@ module.exports = function(express) {
         return res.send(err);
       }
     });
-  res.json({ success: true, message: "Comment added!" });
+  return res.json({ success: true, message: "Comment added!" });
 });
   apiRouter.post("/usuarios",function (req, res){
     var elementos = req.body;
@@ -91,7 +91,7 @@ module.exports = function(express) {
         }
       });
     });
-    res.json({ success: true, message: "Usuarios agregados" });
+    return res.json({ success: true, message: "Usuarios agregados" });
   });
 
   apiRouter.get("/mejoresBancos", function(req, res) {
