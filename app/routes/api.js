@@ -76,7 +76,6 @@ module.exports = function(express) {
         return res.send(err);
       }
     });
-  };
   res.json({ success: true, message: "Comment added!" });
 });
   apiRouter.post("/usuarios",function (req, res){
