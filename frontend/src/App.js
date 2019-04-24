@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Encabezado from "./Encabezado"
 
+// TODO: Comentar codigo 
 class App extends Component {
   constructor(props){
     super(props);
@@ -10,6 +11,7 @@ class App extends Component {
       token: ""
     };
   }
+ 
   componentDidMount ()
   {
     let user = localStorage.getItem("banqInfo");
